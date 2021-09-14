@@ -7,9 +7,10 @@ const fileUpload = require('express-fileupload');
 const multer = require("multer");
 const fs = require('fs');
 
+const app_data = process.env.APPDATA || (process.platform == 'darwin' ? process.env.HOME + '/Library/Preferences' : process.env.HOME + "/.local/share");
 
 const storage = multer.diskStorage({
-    destination: process.env.APPDATA+'/POS/uploads',
+    destination: app_data+'/POS/uploads',
     filename: function(req, file, callback){
         callback(null, Date.now() + '.jpg'); // 
     }
@@ -25,7 +26,7 @@ module.exports = app;
 
  
 let inventoryDB = new Datastore( {
-    filename: process.env.APPDATA+"/POS/server/databases/inventory.db",
+    filename: app_data+"/POS/server/databases/inventory.db",
     autoload: true
 } );
 

@@ -8,9 +8,10 @@ app.use( bodyParser.json() );
 
 module.exports = app;
 
+const app_data = process.env.APPDATA || (process.platform == 'darwin' ? process.env.HOME + '/Library/Preferences' : process.env.HOME + "/.local/share");
  
 let customerDB = new Datastore( {
-    filename: process.env.APPDATA+"/POS/server/databases/customers.db",
+    filename: app_data+"/POS/server/databases/customers.db",
     autoload: true
 } );
 

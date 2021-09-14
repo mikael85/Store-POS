@@ -19,8 +19,10 @@ function createWindow() {
     minWidth: 1200, 
     minHeight: 750,
     webPreferences: {
+      devTools: true,
       nodeIntegration: true,
-      enableRemoteModule: true
+      contextIsolation: false,
+      enableRemoteModule: true,
     },
   });
 
@@ -49,9 +51,12 @@ app.on('activate', () => {
   if (mainWindow === null) {
     createWindow()
   }
-})
+});
 
-
+ipcMain.handle('get-userData', (event, arg) => {
+  // return app.getPath('userData');
+  return process.env.APPDATA || (process.platform == 'darwin' ? process.env.HOME + '/Library/Preferences' : process.env.HOME + "/.local/share");
+});
 
 ipcMain.on('app-quit', (evt, arg) => {
   app.quit()

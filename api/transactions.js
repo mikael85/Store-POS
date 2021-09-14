@@ -7,9 +7,11 @@ let Inventory = require("./inventory");
 app.use(bodyParser.json());
 
 module.exports = app;
+
+const app_data = process.env.APPDATA || (process.platform == 'darwin' ? process.env.HOME + '/Library/Preferences' : process.env.HOME + "/.local/share");
  
 let transactionsDB = new Datastore({
-  filename: process.env.APPDATA+"/POS/server/databases/transactions.db",
+  filename: app_data+"/POS/server/databases/transactions.db",
   autoload: true
 });
 
