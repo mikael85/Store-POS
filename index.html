@@ -44,7 +44,7 @@
                             </div>
                    
                             <button id="viewRefOrders" data-toggle="modal" data-target="#holdOrdersModal" type="button" class="btn btn-info waves-effect waves-light">
-                                    <span class="btn-label"><i class="fa fa-shopping-basket"></i> </span> Abrir pestañas
+                                    <span class="btn-label"><i class="fa fa-shopping-basket"></i> </span> Pedidos Abiertos
                             </button>
             
                             <button id="viewCustomerOrders" data-toggle="modal" data-target="#customerModal" type="button" onclick="$(this).getCustomerOrders()" class="btn btn-info waves-effect waves-light">
@@ -265,7 +265,7 @@
                      <div class="row">
                          <div class="col-md-3">Descuento</div>
                          <div class="col-md-3"><input class="form-control" type="number" id="inputDiscount" oninput="$(this).calculateCart();"></div>
-                         <div class="col-md-3">Precio Bruto (inc <span id="taxInfo"></span>% Tax)</div>
+                         <div class="col-md-3">Precio Total (+  <span id="taxInfo"></span>0% IVA)</div>
                          <div class="col-md-3"><h3 id="gross_price">0.00</h3></div>
                      </div>
   
@@ -890,11 +890,11 @@
                                         <input type="text" required="required"  name="address_two" class="form-control" id="address_two">
                                  </div>
                                  <div class="form-group">
-                                        <label for="userName">Número de Contacto</label>
+                                        <label for="userName">Número de Teléfono</label>
                                         <input type="text" name="contact" class="form-control" id="contact">
                                  </div>
                                  <div class="form-group">
-                                        <label for="userName">Número de IVA</label>
+                                        <label for="userName">CUIT/DNI</label>
                                         <input type="text" name="tax" parsley-trigger="change" class="form-control" id="tax">
                                  </div>
                               
@@ -915,7 +915,7 @@
                                      </div>
                                      <br><br>
                                      <div class="form-group">
-                                        <label><input type="checkbox" name="charge_tax" id="charge_tax"> Cobrar IVA</label>
+                                        <label><input type="checkbox" name="charge_tax" id="charge_tax"> Incluir impuestos</label>
                                      </div>
                                      <div class="form-group">       
                                         <label for="userName"><span id="rmv_logo" class="btn btn-xs btn-warning">Eliminar</span> Logo </label>              

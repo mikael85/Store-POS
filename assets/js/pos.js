@@ -261,7 +261,7 @@ if (auth == undefined) {
 
             $.get(api + 'customers/all', function (customers) {
 
-                $('#customer').html(`<option value="0" selected="selected">Cliente sin Cita</option>`);
+                $('#customer').html(`<option value="0" selected="selected">Consumidor Final</option>`);
 
                 customers.forEach(cust => {
 
@@ -332,8 +332,8 @@ if (auth == undefined) {
                     }
                     else if (data.quantity < 1) {
                         Swal.fire(
-                            'Out of stock!',
-                            'This item is currently unavailable',
+                            'No hay stock!',
+                            'Este item no está disponible actualmente.',
                             'info'
                         );
                     }
@@ -730,14 +730,14 @@ if (auth == undefined) {
             ${settings.address_one} <br>
             ${settings.address_two} <br>
             ${settings.contact != '' ? 'Tel: ' + settings.contact + '<br>' : ''} 
-            ${settings.tax != '' ? 'Vat No: ' + settings.tax + '<br>' : ''} 
+            ${settings.tax != '' ? 'CUIT: ' + settings.tax + '<br>' : ''} 
         </p>
         <hr>
         <left>
             <p>
             Nro Pedido : ${orderNumber} <br>
             Nro Ref : ${refNumber == "" ? orderNumber : refNumber} <br>
-            Cliente : ${customer == 0 ? 'Cliente sin Cita' : customer.name} <br>
+            Cliente : ${customer == 0 ? 'Consumidor Final' : customer.name} <br>
             Cajero : ${user.fullname} <br>
             Fecha : ${date}<br>
             </p>
@@ -901,7 +901,7 @@ if (auth == undefined) {
                                     $('<span>', { text: order.items.length }),
                                     $('<br>'),
                                     $('<b>', { text: 'Customer :' }),
-                                    $('<span>', { text: order.customer != 0 ? order.customer.name : 'Cliente sin Cita', class: 'customer_name' })
+                                    $('<span>', { text: order.customer != 0 ? order.customer.name : 'Consumidor Final', class: 'customer_name' })
                                 ),
                                 $('<button>', { class: 'btn btn-danger del', onclick: '$(this).deleteOrder(' + index + ',' + orderType + ')' }).append(
                                     $('<i>', { class: 'fa fa-trash' })
@@ -942,7 +942,7 @@ if (auth == undefined) {
                 $("#customer option:selected").removeAttr('selected');
 
                 $("#customer option").filter(function () {
-                    return $(this).text() == "Cliente sin Cita";
+                    return $(this).text() == "Consumidor Final";
                 }).prop("selected", true);
 
                 holdOrder = holdOrderList[index]._id;
@@ -2132,7 +2132,7 @@ $.fn.viewTransaction = function (index) {
     transaction_index = index;
 
     let discount = allTransactions[index].discount;
-    let customer = allTransactions[index].customer == 0 ? 'Cliente sin Cita' : allTransactions[index].customer.username;
+    let customer = allTransactions[index].customer == 0 ? 'Consumidor Final' : allTransactions[index].customer.username;
     let refNumber = allTransactions[index].ref_number != "" ? allTransactions[index].ref_number : allTransactions[index].order;
     let orderNumber = allTransactions[index].order;
     let type = "";
@@ -2200,7 +2200,7 @@ $.fn.viewTransaction = function (index) {
         <p>
         Facturación : ${orderNumber} <br>
         Nro Ref : ${refNumber} <br>
-        Cliente : ${allTransactions[index].customer == 0 ? 'Cliente sin Cita' : allTransactions[index].customer.name} <br>
+        Cliente : ${allTransactions[index].customer == 0 ? 'Consumidor Final' : allTransactions[index].customer.name} <br>
         Cajero : ${allTransactions[index].user} <br>
         Fecha : ${moment(allTransactions[index].date).format('DD MMM YYYY HH:mm:ss')}<br>
         </p>
