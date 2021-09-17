@@ -13,18 +13,22 @@ let mainWindow
 
 function createWindow() {
   mainWindow = new BrowserWindow({
-    width: 1500,
-    height: 1200,
-    frame: false,
+    // width: 1500,
+    width: 1200,
+    // height: 1200,
+    height: 700,
+    frame: true,
+    // frame: false,
     minWidth: 1200, 
-    minHeight: 750,
+    minHeight: 700,
     webPreferences: {
       nodeIntegration: true,
       enableRemoteModule: true
     },
   });
 
-  mainWindow.maximize();
+  mainWindow.removeMenu();
+  // mainWindow.maximize();
   mainWindow.show();
 
   mainWindow.loadURL(
@@ -67,11 +71,11 @@ ipcMain.on('app-reload', (event, arg) => {
 contextMenu({
   prepend: (params, browserWindow) => [
      
-      {label: 'DevTools',
-       click(item, focusedWindow){
-        focusedWindow.toggleDevTools();
-      }
-    },
+    //   {label: 'DevTools',
+    //    click(item, focusedWindow){
+    //     focusedWindow.toggleDevTools();
+    //   }
+    // },
      { 
       label: "Reload", 
         click() {
