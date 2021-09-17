@@ -657,10 +657,10 @@ if (auth == undefined) {
                 case 1: type = "Cheque";
                     break;
 
-                case 2: type = "Card";
+                case 2: type = "Tarjeta";
                     break;
 
-                default: type = "Cash";
+                default: type = "Efectivo";
 
             }
 
@@ -687,7 +687,7 @@ if (auth == undefined) {
 
             if (settings.charge_tax) {
                 tax_row = `<tr>
-                    <td>Vat(${settings.percentage})% </td>
+                    <td>IVA(${settings.percentage})% </td>
                     <td>:</td>
                     <td>${settings.symbol}${parseFloat(totalVat).toFixed(2)}</td>
                 </tr>`;
@@ -723,7 +723,7 @@ if (auth == undefined) {
             }
 
 
-            receipt = `<div style="font-size: 10px;">                            
+            receipt = `<div style="font-size: 14px;">
         <p style="text-align: center;">
         ${settings.img == "" ? settings.img : '<img style="max-width: 50px;max-width: 100px;" src ="' + img_path + settings.img + '" /><br>'}
             <span style="font-size: 22px;">${settings.store}</span> <br>
@@ -790,7 +790,8 @@ if (auth == undefined) {
             if (status == 3) {
                 if (cart.length > 0) {
 
-                    printJS({ printable: receipt, type: 'raw-html' });
+                    // printJS({ printable: receipt, type: 'raw-html', style: `.pos-receipt { font-family: 'Roboto', sans-serif; margin: 0px; padding: 0px; }`});
+                    printJS({ printable: receipt, type: 'raw-html', style: [`@page { margin: 2mm; } div { font-family: 'Roboto', sans-serif; margin: 0px; padding: 0px; }`], targetStyles: ['*']});
 
                     $(".loading").hide();
                     return;
@@ -1240,6 +1241,7 @@ if (auth == undefined) {
             }).prop("selected", true);
 
             $('#productName').val(allProducts[index].name);
+            $('#productBarcode').val(allProducts[index].barcode);
             $('#product_price').val(allProducts[index].price);
             $('#quantity').val(allProducts[index].quantity);
 
@@ -1520,7 +1522,7 @@ if (auth == undefined) {
                     $('#product_list').html(product_list);
 
                     products.forEach(pro => {
-                        $("#" + pro._id + "").JsBarcode(pro._id, {
+                        $("#" + pro._id + "").JsBarcode(pro.barcode, {
                             width: 2,
                             height: 25,
                             fontSize: 14
@@ -1919,7 +1921,8 @@ if (auth == undefined) {
 
 $.fn.print = function () {
 
-    printJS({ printable: receipt, type: 'raw-html' });
+    // printJS({ printable: receipt, type: 'raw-html', style: `.pos-receipt { font-family: 'Roboto', sans-serif; margin: 0px; padding: 0px; }`});
+    printJS({ printable: receipt, type: 'raw-html', style: [`@page { margin: 2mm; } div { font-family: 'Roboto', sans-serif; margin: 0px; padding: 0px; }`], targetStyles: ['*']});
 
 }
 
@@ -1977,7 +1980,7 @@ function loadTransactions() {
                                 <td>${settings.symbol + trans.total}</td>
                                 <td>${trans.paid == "" ? "" : settings.symbol + trans.paid}</td>
                                 <td>${trans.change ? settings.symbol + Math.abs(trans.change).toFixed(2) : ''}</td>
-                                <td>${trans.paid == "" ? "" : trans.payment_type == 0 ? "Cash" : 'Card'}</td>
+                                <td>${trans.paid == "" ? "" : trans.payment_type == 0 ? "Efectivo" : 'Tarjeta'}</td>
                                 <td>${trans.till}</td>
                                 <td>${trans.user}</td>
                                 <td>${trans.paid == "" ? '<button class="btn btn-dark"><i class="fa fa-search-plus"></i></button>' : '<button onClick="$(this).viewTransaction(' + index + ')" class="btn btn-info"><i class="fa fa-search-plus"></i></button></td>'}</tr>
@@ -2148,27 +2151,27 @@ $.fn.viewTransaction = function (index) {
 
     switch (allTransactions[index].payment_type) {
 
-        case 2: type = "Card";
+        case 2: type = "Tarjeta";
             break;
 
-        default: type = "Cash";
+        default: type = "Efectivo";
 
     }
 
 
     if (allTransactions[index].paid != "") {
         payment = `<tr>
-                    <td>Paid</td>
+                    <td>Pagó</td>
                     <td>:</td>
                     <td>${settings.symbol + allTransactions[index].paid}</td>
                 </tr>
                 <tr>
-                    <td>Change</td>
+                    <td>Cambio</td>
                     <td>:</td>
                     <td>${settings.symbol + Math.abs(allTransactions[index].change).toFixed(2)}</td>
                 </tr>
                 <tr>
-                    <td>Method</td>
+                    <td>Método</td>
                     <td>:</td>
                     <td>${type}</td>
                 </tr>`
@@ -2178,7 +2181,7 @@ $.fn.viewTransaction = function (index) {
 
     if (settings.charge_tax) {
         tax_row = `<tr>
-                <td>Vat(${settings.percentage})% </td>
+                <td>IVA(${settings.percentage})% </td>
                 <td>:</td>
                 <td>${settings.symbol}${parseFloat(allTransactions[index].tax).toFixed(2)}</td>
             </tr>`;
@@ -2186,14 +2189,14 @@ $.fn.viewTransaction = function (index) {
 
 
 
-    receipt = `<div style="font-size: 10px;">                            
+    receipt = `<div style="font-size: 14px;">
         <p style="text-align: center;">
         ${settings.img == "" ? settings.img : '<img style="max-width: 50px;max-width: 100px;" src ="' + img_path + settings.img + '" /><br>'}
             <span style="font-size: 22px;">${settings.store}</span> <br>
             ${settings.address_one} <br>
             ${settings.address_two} <br>
             ${settings.contact != '' ? 'Tel: ' + settings.contact + '<br>' : ''} 
-            ${settings.tax != '' ? 'Vat No: ' + settings.tax + '<br>' : ''} 
+            ${settings.tax != '' ? 'CUIT: ' + settings.tax + '<br>' : ''} 
     </p>
     <hr>
     <left>

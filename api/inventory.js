@@ -90,21 +90,29 @@ app.post( "/product", upload.single('imagename'), function ( req, res ) {
     let Product = {
         _id: parseInt(req.body.id),
         price: req.body.price,
+        // barcode: req.body.barcode === '' || !req.body.barcode ? req.body.id : req.body.barcode,
+        barcode: req.body.barcode,
         category: req.body.category,
         quantity: req.body.quantity == "" ? 0 : req.body.quantity,
         name: req.body.name,
         stock: req.body.stock == "on" ? 0 : 1,    
-        img: image        
-    }
+        img: image
+    };
 
     if(req.body.id == "") { 
         Product._id = Math.floor(Date.now() / 1000);
+        if (req.body.barcode == ""){
+            Product.barcode = Product._id.toString();
+        }
         inventoryDB.insert( Product, function ( err, product ) {
             if ( err ) res.status( 500 ).send( err );
             else res.send( product );
         });
     }
     else { 
+        if (req.body.barcode == ""){
+            Product.barcode = Product._id.toString();
+        }
         inventoryDB.update( {
             _id: parseInt(req.body.id)
         }, Product, {}, function (
@@ -136,8 +144,10 @@ app.delete( "/product/:productId", function ( req, res ) {
 
 app.post( "/product/sku", function ( req, res ) {
     var request = req.body;
+    // inventoryDB.findOne( {
+    //         _id: parseInt(request.skuCode)
     inventoryDB.findOne( {
-            _id: parseInt(request.skuCode)
+            barcode: request.skuCode
     }, function ( err, product ) {
          res.send( product );
     } );

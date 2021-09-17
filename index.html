@@ -2,7 +2,7 @@
 <html>
   <head>
     <meta charset="UTF-8">
-    <title>Punto de Venta</title>
+    <title>ideaPOS</title>
     <link href="assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
     <link href="assets/css/core.css" rel="stylesheet" type="text/css" />
     <link href="assets/css/components.css" rel="stylesheet" type="text/css" />
@@ -14,7 +14,7 @@
     <link href="assets/plugins/dataTables/dataTables.bootstrap.min.css" rel="stylesheet" type="text/css" />    
     <link href="assets/css/pages.css" rel="stylesheet" type="text/css" />
     </head>
-  <body>
+  <body oncontextmenu="return false">
     
   <div class="main_app">
 
@@ -378,7 +378,7 @@
                   </div>
               </div>
               <div class="modal-footer">
-                  <button type="button" onclick="$(this).submitDueOrder(0);" class="btn btn-primary btn-block btn-lg waves-effect waves-light">Hold Order</button>
+                  <button type="button" onclick="$(this).submitDueOrder(0);" class="btn btn-primary btn-block btn-lg waves-effect waves-light">Guardar Orden</button>
               </div>
   
           </div><!-- /.modal-content -->
@@ -547,26 +547,30 @@
                         <input type="hidden" name="img" id="img">
                         <input type="hidden" name="remove" id="remove_img">
                         <div class="form-group">
-                            <label for="userName">Categoría</label>
+                            <label for="category">Categoría</label>
                             <select name="category" class="form-control" id="category"></select>
                         </div>
                         <div class="form-group">
-                            <label for="userName">Nombre del Producto</label>
+                            <label for="productName">Nombre del Producto</label>
                             <input type="text" required="required"  name="name" parsley-trigger="change" placeholder="Introduzca nombre de producto" class="form-control" id="productName">
                         </div>
                         <div class="form-group">
-                            <label for="userName">Precio</label>
+                            <label for="productBarcode">Código de Barras</label>
+                            <input type="text" name="barcode" parsley-trigger="change" placeholder="Lea un código de barras" class="form-control" id="productBarcode">
+                        </div>
+                        <div class="form-group">
+                            <label for="product_price">Precio</label>
                             <input type="text" required="required" name="price" placeholder="Precio" class="form-control" id="product_price">
                         </div>
                         <div class="form-group">
-                            <label for="userName">Stock</label>
+                            <label for="quantity">Stock</label>
                             <input type="text" name="quantity" placeholder="Stock disponible" class="form-control" id="quantity">
                         </div>
                         <div class="form-group">
                             <label><input type="checkbox" name="stock" id="stock" style="max-width: 30px; float: left;">  Desactivar Control de Stock </label>
                         </div>
                         <div class="form-group">
-                            <label for="userName"><span id="rmv_img" class="btn btn-xs btn-warning">Eliminar</span> Imagen </label>                      
+                            <label for="imagename"><span id="rmv_img" class="btn btn-xs btn-warning">Eliminar</span> Imagen </label>                      
                             <div id="current_img"></div>
                             <input type="file" name="imagename" id="imagename">                            
                         </div>
@@ -894,7 +898,7 @@
                                         <input type="text" name="contact" class="form-control" id="contact">
                                  </div>
                                  <div class="form-group">
-                                        <label for="userName">CUIT/DNI</label>
+                                        <label for="userName">CUIT</label>
                                         <input type="text" name="tax" parsley-trigger="change" class="form-control" id="tax">
                                  </div>
                               
